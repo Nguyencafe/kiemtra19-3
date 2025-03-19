@@ -16,7 +16,8 @@ if ($conn->connect_error) {
 $conn->query("CREATE TABLE IF NOT EXISTS HocPhan (
     MaHP CHAR(6) PRIMARY KEY,
     TenHP NVARCHAR(30) NOT NULL,
-    SoTinChi INT
+    SoTinChi INT,
+    SoLuongDuKien INT DEFAULT 100
 )");
 
 $conn->query("CREATE TABLE IF NOT EXISTS DangKy (
@@ -33,4 +34,7 @@ $conn->query("CREATE TABLE IF NOT EXISTS ChiTietDangKy (
     FOREIGN KEY (MaDK) REFERENCES DangKy(MaDK),
     FOREIGN KEY (MaHP) REFERENCES HocPhan(MaHP)
 )");
+
+// Cập nhật số lượng dự kiến của hai học phần
+$conn->query("UPDATE HocPhan SET SoLuongDuKien = 100 WHERE TenHP = 'Cơ sở dữ liệu' OR TenHP = 'Kinh tế vi mô'");
 ?>

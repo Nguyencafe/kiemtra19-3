@@ -10,9 +10,13 @@ if (!isset($_SESSION['MaSV'])) {
 $MaSV = $_SESSION['MaSV'];
 $HoTen = $_SESSION['HoTen'];
 $NgaySinh = $_SESSION['NgaySinh'];
-$TenNganh = $_SESSION['TenNganh'];
+$MaNganh = $_SESSION['MaNganh'];
 $NgayDK = date('Y-m-d');
 
+// Lấy tên ngành học từ MaNganh
+$result = $conn->query("SELECT TenNganh FROM NganhHoc WHERE MaNganh = '$MaNganh'");
+$nganh = $result->fetch_assoc();
+$TenNganh = $nganh['TenNganh'];
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +49,7 @@ $NgayDK = date('Y-m-d');
 
 <div class="container mt-4">
     <h2 class="text-center text-primary">Thông tin đăng ký học phần</h2>
-đâu
+
     <?php if (isset($_SESSION['success_message'])): ?>
         <div class="alert alert-success">
             <?= $_SESSION['success_message'] ?>

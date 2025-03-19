@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['MaSV'] = $MaSV;
         $_SESSION['HoTen'] = $sinhvien['HoTen'];
         $_SESSION['NgaySinh'] = $sinhvien['NgaySinh'];
-        $_SESSION['TenNganh'] = $sinhvien['TenNganh'];
+        $_SESSION['MaNganh'] = $sinhvien['MaNganh'];
         header("Location: register_course.php");
     } else {
         $error = "Mã sinh viên không tồn tại!";

@@ -40,6 +40,7 @@ $result = $conn->query("SELECT * FROM HocPhan");
                 <th>Mã Học Phần</th>
                 <th>Tên Học Phần</th>
                 <th>Số Tín Chỉ</th>
+                <th>Số Lượng Dự Kiến</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -49,6 +50,7 @@ $result = $conn->query("SELECT * FROM HocPhan");
                 <td><?= $row['MaHP'] ?></td>
                 <td><?= $row['TenHP'] ?></td>
                 <td><?= $row['SoTinChi'] ?></td>
+                <td><?= $row['SoLuongDuKien'] ?></td>
                 <td>
                     <a href="edit_course.php?id=<?= $row['MaHP'] ?>" class="btn btn-warning btn-sm">Sửa</a>
                     <a href="delete_course.php?id=<?= $row['MaHP'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa học phần này?');">Xóa</a>

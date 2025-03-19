@@ -6,12 +6,17 @@ if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
+// Cập nhật số lượng dự kiến của hai học phần "Cơ sở dữ liệu" và "Kinh tế vi mô" thành 100
+$conn->query("UPDATE HocPhan SET SoLuongDuKien = 100 WHERE TenHP = 'Cơ sở dữ liệu' OR TenHP = 'Kinh tế vi mô'");
+
 if (isset($_GET['add'])) {
     $MaHP = $_GET['add'];
     $result = $conn->query("SELECT * FROM HocPhan WHERE MaHP = '$MaHP'");
     $course = $result->fetch_assoc();
     if ($course) {
         $_SESSION['cart'][$MaHP] = $course;
+        // Giảm số lượng dự kiến
+        $conn->query("UPDATE HocPhan SET SoLuongDuKien = SoLuongDuKien - 1 WHERE MaHP = '$MaHP'");
         header("Location: view_registration.php");
         exit();
     }
@@ -19,10 +24,19 @@ if (isset($_GET['add'])) {
 
 if (isset($_GET['remove'])) {
     $MaHP = $_GET['remove'];
-    unset($_SESSION['cart'][$MaHP]);
+    if (isset($_SESSION['cart'][$MaHP])) {
+        unset($_SESSION['cart'][$MaHP]);
+        // Tăng số lượng dự kiến
+        $conn->query("UPDATE HocPhan SET SoLuongDuKien = SoLuongDuKien + 1 WHERE MaHP = '$MaHP'");
+    }
 }
 
 if (isset($_GET['clear'])) {
+    foreach ($_SESSION['cart'] as $course) {
+        $MaHP = $course['MaHP'];
+        // Tăng số lượng dự kiến
+        $conn->query("UPDATE HocPhan SET SoLuongDuKien = SoLuongDuKien + 1 WHERE MaHP = '$MaHP'");
+    }
     $_SESSION['cart'] = [];
 }
 
@@ -66,6 +80,7 @@ $courses = $conn->query("SELECT * FROM HocPhan");
                 <th>Mã Học Phần</th>
                 <th>Tên Học Phần</th>
                 <th>Số Tín Chỉ</th>
+                <th>Số Lượng Dự Kiến</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -75,6 +90,7 @@ $courses = $conn->query("SELECT * FROM HocPhan");
                 <td><?= $row['MaHP'] ?></td>
                 <td><?= $row['TenHP'] ?></td>
                 <td><?= $row['SoTinChi'] ?></td>
+                <td><?= isset($row['SoLuongDuKien']) ? $row['SoLuongDuKien'] : 'N/A' ?></td>
                 <td>
                     <a href="register_course.php?add=<?= $row['MaHP'] ?>" class="btn btn-success btn-sm">Đăng Kí</a>
                 </td>

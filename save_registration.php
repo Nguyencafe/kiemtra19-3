@@ -18,7 +18,7 @@ foreach ($_SESSION['cart'] as $course) {
     $conn->query("INSERT INTO ChiTietDangKy (MaDK, MaHP) VALUES ('$MaDK', '$MaHP')");
 }
 
-$_SESSION['cart'] = [];
+// Không xóa giỏ hàng sau khi lưu đăng ký
 $_SESSION['success_message'] = "Thông tin học phần đã lưu thành công!";
 header("Location: view_registration.php");
 ?>

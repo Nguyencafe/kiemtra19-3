@@ -5,8 +5,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $MaHP = $_POST['MaHP'];
     $TenHP = $_POST['TenHP'];
     $SoTinChi = $_POST['SoTinChi'];
+    $SoLuongDuKien = $_POST['SoLuongDuKien'];
 
-    $sql = "INSERT INTO HocPhan (MaHP, TenHP, SoTinChi) VALUES ('$MaHP', '$TenHP', '$SoTinChi')";
+    $sql = "INSERT INTO HocPhan (MaHP, TenHP, SoTinChi, SoLuongDuKien) VALUES ('$MaHP', '$TenHP', '$SoTinChi', '$SoLuongDuKien')";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: course_list.php");
@@ -37,6 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="mb-3">
                 <label for="SoTinChi" class="form-label">Số Tín Chỉ:</label>
                 <input type="number" name="SoTinChi" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="SoLuongDuKien" class="form-label">Số Lượng Dự Kiến:</label>
+                <input type="number" name="SoLuongDuKien" class="form-control" value="100" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Thêm Học Phần</button>
         </form>
